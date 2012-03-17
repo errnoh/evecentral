@@ -2,27 +2,19 @@ package evecentral
 
 // ------------------- quicklook ---------------------
 
-type QL struct {
-	Version   string       `xml:"version,attr"`
-	Method    string       `xml:"method,attr"`
-	Quicklook *QLQuicklook `xml:"quicklook"`
-}
-
-type QLQuicklook struct {
-	Item        int       `xml:"item"`
-	Itemname    string    `xml:"itemname"`
-	Regions     string    `xml:"regions"`
-	Hours       int       `xml:"hours"`
-	Minqty      int       `xml:"minqty"`
-	Sell_orders *QLOrders `xml:"sell_orders"`
-	Buy_orders  *QLOrders `xml:"buy_orders"`
+type ECQuicklook struct {
+	Version     string      `xml:"version,attr"`
+	Method      string      `xml:"method,attr"`
+	Item        int         `xml:"quicklook>item"`
+	Itemname    string      `xml:"quicklook>itemname"`
+	Regions     string      `xml:"quicklook>regions"`
+	Hours       int         `xml:"quicklook>hours"`
+	Minqty      int         `xml:"quicklook>minqty"`
+	Sell_orders []*QLOrders `xml:"quicklook>sell_orders>order"`
+	Buy_orders  []*QLOrders `xml:"quicklook>buy_orders>order"`
 }
 
 type QLOrders struct {
-	Orders []*QLOrder `xml:"order"`
-}
-
-type QLOrder struct {
 	Id            string  `xml:"id,attr"` // <order id="2456258421">
 	Region        int     `xml:"region"`
 	Station       int     `xml:"station"`
@@ -38,17 +30,13 @@ type QLOrder struct {
 
 // ------------------- marketstat ---------------------
 
-type MS struct {
-	Version    string        `xml:"version,attr"`
-	Method     string        `xml:"method,attr"`
-	Marketstat *MSMarketstat `xml:"marketstat"`
+type ECMarketstat struct {
+	Version string    `xml:"version,attr"`
+	Method  string    `xml:"method,attr"`
+	Item    []*MSItem `xml:"marketstat>type"`
 }
 
-type MSMarketstat struct {
-	Types []*MSType `xml:"type"`
-}
-
-type MSType struct {
+type MSItem struct {
 	Id   int          `xml:"id,attr"`
 	All  *MSPriceInfo `xml:"all"`
 	Buy  *MSPriceInfo `xml:"buy"`

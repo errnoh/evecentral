@@ -11,3 +11,6 @@ http://eve-central.com/home/develop.html
 `    contents, ok := evecentral.Marketstat(2, []int{34,35}, -1, []int{}, 30000142)`
 
 _-1 is used as nil value for integer type parameters_
+
+#TODO:
+* Share a single decoder between API calls
